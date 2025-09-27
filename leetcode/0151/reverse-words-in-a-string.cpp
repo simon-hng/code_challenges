@@ -1,21 +1,26 @@
-#include "../include/bits/stdc++.h"
-
-using namespace std;
+#include <sstream>
+#include <string>
 
 class Solution {
  public:
-  string reverseWords(string s) {
-    std::istringstream iss{s};
-    std::vector<string> words;
+  std::string reverseWords(std::string s) {
+    std::istringstream iss(s);
+    std::vector<std::string> words;
+    std::string word;
 
-    while (std::getline(iss, s, ' ')) {
-      if (s.empty()) continue;
-      words.push_back(s);
+    while (iss >> word) {
+      words.push_back(word);
     }
 
-    return std::accumulate(words.rbegin(), words.rend(), std::string(""),
-                           [](const std::string& a, const std::string& b) {
-                             return a.empty() ? b : a + ' ' + b;
-                           });
+    std::ostringstream oss{};
+    oss << words.back();
+    words.pop_back();
+
+    while (!words.empty()) {
+      oss << " " << words.back();
+      words.pop_back();
+    }
+
+    return oss.str();
   }
 };

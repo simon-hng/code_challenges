@@ -1,6 +1,9 @@
-#include "../include/bits/stdc++.h"
+/**
+ * Definition for a binary tree node.
+ */
 
-// Definition for a binary tree node.
+#include <queue>
+#include <vector>
 struct TreeNode {
   int val;
   TreeNode *left;
@@ -14,21 +17,28 @@ struct TreeNode {
 class Solution {
  public:
   std::vector<int> rightSideView(TreeNode *root) {
-    if (root == nullptr) return {};
-
+    std::queue<TreeNode *> q{};
     std::vector<int> result{};
-    std::vector<TreeNode *> level_nodes{root};
+    if (!root) return result;
 
-    while (!level_nodes.empty()) {
-      result.push_back(level_nodes.back()->val);
-      std::vector<TreeNode *> next_level_nodes{};
+    q.push(root);
 
-      for (auto node : level_nodes) {
-        if (node->left != nullptr) next_level_nodes.push_back(node->left);
-        if (node->right != nullptr) next_level_nodes.push_back(node->right);
+    while (!q.empty()) {
+      auto len = q.size();
+      result.push_back(q.front()->val);
+
+      for (auto i{0}; i < len; ++i) {
+        const auto current = q.front();
+        q.pop();
+
+        if (current->right) {
+          q.push(current->right);
+        }
+        if (current->left) {
+          q.push(current->left);
+        }
       }
-      level_nodes = next_level_nodes;
-    };
+    }
 
     return result;
   }
