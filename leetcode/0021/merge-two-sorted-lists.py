@@ -3,6 +3,7 @@ class ListNode:
         self.val = val
         self.next = next
 
+
 class Solution:
     def mergeTwoLists(self, list1: ListNode, list2: ListNode) -> ListNode:
         resultHead = ListNode()
@@ -17,7 +18,7 @@ class Solution:
                 list2 = list2.next
             node = node.next
 
-        if(list1 or list2):
+        if list1 or list2:
             node.next = list1 if list1 else list2
 
         return resultHead.next
